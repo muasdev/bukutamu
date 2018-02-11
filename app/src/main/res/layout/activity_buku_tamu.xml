@@ -20,28 +20,28 @@
 
         <TextView
             android:id="@+id/txt_nomorurut"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="30dp"
             android:text="nomor"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/txt_waktu"
-            android:layout_alignParentRight="true"
-            android:paddingRight="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="30dp"
             android:text="waktu"
-            android:textSize="30sp"/>
+            android:textSize="30sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/li_center"
-        android:layout_below="@id/li_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/li_header"
         android:orientation="vertical">
 
         <LinearLayout
@@ -117,9 +117,9 @@
                     android:id="@+id/btn_take_ttd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:text="tanda tangan"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/imgView_Foto_tamu"

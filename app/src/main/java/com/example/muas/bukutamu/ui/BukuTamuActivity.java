@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dd.CircularProgressButton;
+import com.example.muas.bukutamu.MainActivity;
 import com.example.muas.bukutamu.R;
 import com.example.muas.bukutamu.db.DatabaseHandler;
 import com.example.muas.bukutamu.db.model.Contact;
@@ -73,6 +75,8 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     final int REQUEST_IMAGE_CAPTURE = 1;
 
+    final int REQUEST_IMAGE_TTD = 2;
+
     /*waktu*/
     Calendar calendar;
     SimpleDateFormat simpleDateFormat;
@@ -87,7 +91,7 @@ public class BukuTamuActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         db = new DatabaseHandler(this);
-        btnTakePhoto.setEnabled(false);
+        /*btnTakePhoto.setEnabled(false);*/
 
         calendar = Calendar.getInstance();
         /*simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");*/
@@ -99,16 +103,14 @@ public class BukuTamuActivity extends AppCompatActivity {
         int profile_counts = db.getProfilesCount();
         txtNomorurut.setText(String.valueOf("nomor urut : " + (profile_counts + 1)));
 
-
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
             signaturePath = extras.getString("SignaturePath");
             if (signaturePath != null)
                 imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
             btnTakePhoto.setEnabled(true);
-        }
-
+        }*/
 
     }
 
@@ -147,6 +149,34 @@ public class BukuTamuActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            case REQUEST_IMAGE_TTD:
+
+                if (resultCode == RESULT_OK) {
+
+                    Bundle extras = data.getExtras();
+
+                    if (extras != null) {
+                        signaturePath = extras.getString("SignaturePath");
+                        if (signaturePath != null) {
+                            imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
+                            btnTakePhoto.setEnabled(true);
+                        } else {
+                            imgViewFotoTtd.setImageResource(R.drawable.ic_apps_black_24dp);
+                        }
+
+                    }
+
+                    /*Intent intent = getIntent();
+                    Bundle extras = intent.getExtras();
+
+                    if (extras != null) {
+                        signaturePath = data.getStringExtra("SignaturePath");
+                        if (signaturePath != null)
+                            imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
+                        btnTakePhoto.setEnabled(true);
+                    }*/
+                }
+                break;
             case REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
                     Uri choosenImage = data.getData();
@@ -157,6 +187,8 @@ public class BukuTamuActivity extends AppCompatActivity {
                         imgViewFotoTamu.setImageBitmap(bp);
                     }
                 }
+                break;
+
         }
     }
 
@@ -237,10 +269,10 @@ public class BukuTamuActivity extends AppCompatActivity {
                 break;
             case R.id.btn_take_ttd:
                 Intent intent = new Intent(this, SignatureActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_IMAGE_TTD);
                 break;
             case R.id.btn_save:
-                if (edtName.getText().toString().trim().equals("")) {
+                /*if (edtName.getText().toString().trim().equals("")) {
                     Toast.makeText(this, "Name edit text is empty, Enter name", Toast.LENGTH_LONG).show();
                 } else if (edtAlamat.getText().toString().trim().equals("")) {
                     Toast.makeText(this, "Name edit text is empty, masukkan alamat", Toast.LENGTH_LONG).show();
@@ -251,7 +283,10 @@ public class BukuTamuActivity extends AppCompatActivity {
                 } else if (edtTujuan.getText().toString().trim().equals("")) {
                     Toast.makeText(this, "Name edit text is empty, masukkan tujuan", Toast.LENGTH_LONG).show();
                 } else
+                */
                     addContact();
+                    Intent intent1 = new Intent(this, MainActivity.class);
+                    startActivity(intent1);
 
                 break;
         }
@@ -264,5 +299,12 @@ public class BukuTamuActivity extends AppCompatActivity {
         imgViewFotoTamu.setImageResource(R.mipmap.ic_launcher);
         btnTakePhoto.setEnabled(false);
     }
-
+    /*@OnClick(R.id.btnWithText)
+    public void onViewClicked() {
+        btnWithText.setIndeterminateProgressMode(true); // turn on indeterminate progress
+        btnWithText.setProgress(50); // set progress > 0 & < 100 to display indeterminate progress
+        btnWithText.setProgress(100); // set progress to 100 or -1 to indicate complete or error state
+        btnWithText.setProgress(0); // set progress to 0 to switch back to normal state
+        addContact();
+    }*/
 }

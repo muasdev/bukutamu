@@ -87,7 +87,10 @@ public class SignatureActivity extends AppCompatActivity {
                 }
                 Toast.makeText(SignatureActivity.this, "Signature Saved", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(SignatureActivity.this, BukuTamuActivity.class);
-                i.putExtra("SignaturePath", signaturePath);
+                Bundle bundle = new Bundle();
+                bundle.putString("SignaturePath", signaturePath);
+                i.putExtras(bundle);
+                setResult(RESULT_OK, i);
                 startActivity(i);
             }
 

@@ -85,6 +85,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NOHP, contact.getnohp_model());
         values.put(KEY_TUJUAN, contact.gettujuan_model());
         values.put(KEY_TIMEIN, contact.getTimein_model());
+        /*values.put(KEY_TIMEIN, getDateTime());*/
         values.put(KEY_POTO, contact.get_img());
 
 
@@ -141,7 +142,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_INSTANSI, contact.getinstansi_model());
         values.put(KEY_NOHP, contact.getnohp_model());
         values.put(KEY_TUJUAN, contact.gettujuan_model());
-        values.put(KEY_TIMEIN, contact.getTimein_model());
+        values.put(KEY_TIMEIN, getDateTime());
         values.put(KEY_POTO, contact.get_img());
 
 

@@ -14,6 +14,7 @@ import com.example.muas.bukutamu.R;
 import com.example.muas.bukutamu.db.DatabaseHandler;
 import com.example.muas.bukutamu.db.dataAdapter;
 import com.example.muas.bukutamu.db.model.Contact;
+import com.example.muas.bukutamu.util.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ public class DaftarTamuActivity extends AppCompatActivity {
     Button btnDisplay;
     @BindView(R.id.list1)
     ListView list1;
-    Unbinder unbinder;
     @BindView(R.id.btn_export)
     Button btnExport;
 
@@ -54,6 +54,7 @@ public class DaftarTamuActivity extends AppCompatActivity {
         btnExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                /*Toast.makeText(DaftarTamuActivity.this, "ok fungsi ji je", Toast.LENGTH_SHORT).show();*/
                 String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Backup/";
                 File file = new File(directory_path);
                 if (!file.exists()) {
@@ -61,7 +62,7 @@ public class DaftarTamuActivity extends AppCompatActivity {
                 }
                 // Export SQLite DB as EXCEL FILE
                 SQLiteToExcel sqliteToExcel = new SQLiteToExcel(DaftarTamuActivity.this, db.DATABASE_NAME, directory_path);
-                sqliteToExcel.exportAllTables("bukutamuku.xls", new SQLiteToExcel.ExportListener() {
+                sqliteToExcel.exportAllTables("bukutamu.xls", new SQLiteToExcel.ExportListener() {
                     @Override
                     public void onStart() {
 
@@ -69,7 +70,7 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
                     @Override
                     public void onCompleted(String filePath) {
-                        com.example.muas.bukutamu.util.Utils.showSnackBar(view, "Successfully Exported");
+                        Utils.showSnackBar(view, "Successfully Exported");
                     }
 
                     @Override
@@ -104,15 +105,12 @@ public class DaftarTamuActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.btn_display, R.id.btn_export})
+    @OnClick({R.id.btn_display})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_display:
 
                 ShowRecords();
-                break;
-            case R.id.btn_export:
-
                 break;
         }
     }
