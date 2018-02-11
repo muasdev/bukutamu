@@ -7,24 +7,66 @@
     android:orientation="vertical"
     tools:context="com.example.muas.bukutamu.MainActivity">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:scaleType="centerInside"
-        android:layout_gravity="center"
-        android:background="@drawable/logo_pinrang"
-        />
-
-    <Button
-        android:id="@+id/button_bukutamu"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="buku tamu"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button_listtamu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="list tamu"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/image_profil_main_activity"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/logo_pinrang"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_profil_main_activity"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:text="Buku Tamu"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="@color/cpb_blue"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/button_bukutamu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_home_black_24dp"
+                android:text="buku tamu" />
+
+            <Button
+                android:drawableStart="@drawable/ic_apps_black_24dp"
+                android:id="@+id/button_listtamu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="list tamu" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

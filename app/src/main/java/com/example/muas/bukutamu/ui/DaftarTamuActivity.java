@@ -1,8 +1,8 @@
 package com.example.muas.bukutamu.ui;
 
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class DaftarTamuActivity extends AppCompatActivity {
 
@@ -51,10 +50,10 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
 
         /*export data to excel*/
-        btnExport.setOnClickListener(new View.OnClickListener() {
+        /*btnExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                /*Toast.makeText(DaftarTamuActivity.this, "ok fungsi ji je", Toast.LENGTH_SHORT).show();*/
+                *//*Toast.makeText(DaftarTamuActivity.this, "ok fungsi ji je", Toast.LENGTH_SHORT).show();*//*
                 String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Backup/";
                 File file = new File(directory_path);
                 if (!file.exists()) {
@@ -79,12 +78,37 @@ public class DaftarTamuActivity extends AppCompatActivity {
                     }
                 });
             }
-        });
+        });*/
 
     }
 
 
     /*convert to pdf*/
+    private void ExportData(){
+        String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Backup/";
+        File file = new File(directory_path);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        // Export SQLite DB as EXCEL FILE
+        SQLiteToExcel sqliteToExcel = new SQLiteToExcel(DaftarTamuActivity.this, db.DATABASE_NAME, directory_path);
+        sqliteToExcel.exportAllTables("bukutamu.xls", new SQLiteToExcel.ExportListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onCompleted(String filePath) {
+                Toast.makeText(DaftarTamuActivity.this, "ok fungsi ji je", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
 
 
     //Retrieve data from the database and set to the list view
@@ -105,12 +129,15 @@ public class DaftarTamuActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick({R.id.btn_display})
+
+    @OnClick({R.id.btn_display, R.id.btn_export})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_display:
-
                 ShowRecords();
+                break;
+            case R.id.btn_export:
+                ExportData();
                 break;
         }
     }

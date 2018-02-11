@@ -103,14 +103,14 @@ public class BukuTamuActivity extends AppCompatActivity {
         int profile_counts = db.getProfilesCount();
         txtNomorurut.setText(String.valueOf("nomor urut : " + (profile_counts + 1)));
 
-        /*Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
             signaturePath = extras.getString("SignaturePath");
             if (signaturePath != null)
                 imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
             btnTakePhoto.setEnabled(true);
-        }*/
+        }
 
     }
 
@@ -149,7 +149,7 @@ public class BukuTamuActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_IMAGE_TTD:
+            /*case REQUEST_IMAGE_TTD:
 
                 if (resultCode == RESULT_OK) {
 
@@ -164,7 +164,7 @@ public class BukuTamuActivity extends AppCompatActivity {
                             imgViewFotoTtd.setImageResource(R.drawable.ic_apps_black_24dp);
                         }
 
-                    }
+                    }*/
 
                     /*Intent intent = getIntent();
                     Bundle extras = intent.getExtras();
@@ -175,8 +175,7 @@ public class BukuTamuActivity extends AppCompatActivity {
                             imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
                         btnTakePhoto.setEnabled(true);
                     }*/
-                }
-                break;
+
             case REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
                     Uri choosenImage = data.getData();
