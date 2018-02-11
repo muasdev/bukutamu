@@ -8,8 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.muas.bukutamu.db.model.Contact;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -48,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_INSTANSI + " TEXT,"
                 + KEY_NOHP + " TEXT,"
                 + KEY_TUJUAN + " TEXT,"
-                + KEY_TIMEIN + " TEXT,"
+                + KEY_TIMEIN + " TEXT," /*ini data date*/
                 + KEY_POTO + " BLOB" + ")";
         db.execSQL(CREATE_TABLE_TAMU);
     }
@@ -165,6 +169,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         return count;
+    }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
 

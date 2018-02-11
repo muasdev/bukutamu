@@ -90,6 +90,7 @@ public class BukuTamuActivity extends AppCompatActivity {
         btnTakePhoto.setEnabled(false);
 
         calendar = Calendar.getInstance();
+        /*simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");*/
         simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date = simpleDateFormat.format(calendar.getTime());
         txtWaktu.setText(Date);
@@ -110,6 +111,33 @@ public class BukuTamuActivity extends AppCompatActivity {
 
 
     }
+
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        nama = edtName.getText().toString();
+        alamat = edtAlamat.getText().toString();
+        instansi = edtInstansi.getText().toString();
+        nohp = edtNohp.getText().toString();
+        tujuan = edtTujuan.getText().toString();
+        timein = txtWaktu.getText().toString();
+        img = profileImage(bp);
+
+        outState.putString("editext1", nama);
+        outState.putString("editext2", alamat);
+        outState.putString("editext3", instansi);
+        outState.putString("editext4", nohp);
+        outState.putString("editext5", tujuan);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+
+        edtName.setText(savedInstanceState.getString("edittext1"));
+    }*/
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
