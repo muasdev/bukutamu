@@ -49,15 +49,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/li_header"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:orientation="horizontal">
 
             <LinearLayout
+                android:layout_margin="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -107,6 +103,12 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:background="@color/cpb_blue"
+                />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -147,7 +149,6 @@
         </LinearLayout>
 
 
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/li_footer"

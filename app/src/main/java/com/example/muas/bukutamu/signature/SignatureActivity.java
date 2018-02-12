@@ -71,7 +71,7 @@ public class SignatureActivity extends AppCompatActivity {
                 Random rand = new Random();
                 int randomValue = rand.nextInt(9999);
                 File file = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() +
-                        "/" + String.valueOf(randomValue) + "capturedsignature.jpg");
+                        "/Backup/" + String.valueOf(randomValue) + "capturedsignature.jpg");
                 try {
                     if (file.createNewFile()) {
                         file.createNewFile();

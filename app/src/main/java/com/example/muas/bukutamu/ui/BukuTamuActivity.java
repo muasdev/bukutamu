@@ -2,6 +2,7 @@ package com.example.muas.bukutamu.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -111,6 +112,9 @@ public class BukuTamuActivity extends AppCompatActivity {
                 imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
             btnTakePhoto.setEnabled(true);
         }
+
+        //change screen orientation to landscape mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     }
 

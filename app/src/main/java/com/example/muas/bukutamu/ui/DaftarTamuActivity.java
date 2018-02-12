@@ -1,5 +1,6 @@
 package com.example.muas.bukutamu.ui;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -79,8 +80,12 @@ public class DaftarTamuActivity extends AppCompatActivity {
                 });
             }
         });*/
+        //change screen orientation to landscape mode
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
     }
+
+
 
 
     /*convert to pdf*/
