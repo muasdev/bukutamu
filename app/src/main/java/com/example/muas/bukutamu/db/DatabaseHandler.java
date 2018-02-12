@@ -35,6 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_NOHP = "nomorhp";
     private static final String KEY_TUJUAN = "tujuan";
     private static final String KEY_TIMEIN = "timein";
+    private static final String KEY_SIGNATURE = "signature";
     private static final String KEY_POTO = "photo";
 
 
@@ -52,7 +53,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_INSTANSI + " TEXT,"
                 + KEY_NOHP + " TEXT,"
                 + KEY_TUJUAN + " TEXT,"
-                + KEY_TIMEIN + " TEXT," /*ini data date*/
+                + KEY_TIMEIN + " TEXT,"
+                + KEY_SIGNATURE + " BLOB,"
                 + KEY_POTO + " BLOB" + ")";
         db.execSQL(CREATE_TABLE_TAMU);
     }
@@ -85,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_NOHP, contact.getnohp_model());
         values.put(KEY_TUJUAN, contact.gettujuan_model());
         values.put(KEY_TIMEIN, contact.getTimein_model());
-        /*values.put(KEY_TIMEIN, getDateTime());*/
+        values.put(KEY_SIGNATURE, contact.getSignature_model());
         values.put(KEY_POTO, contact.get_img());
 
 
@@ -117,7 +119,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contact.setnohp_model(cursor.getString(4));
                 contact.settujuan_model(cursor.getString(5));
                 contact.setTimein_model(cursor.getString(6));
-                contact.set_img(cursor.getBlob(7));
+                contact.setSignature_model(cursor.getBlob(7));
+                contact.set_img(cursor.getBlob(8));
 
                 // Adding contact to list
                 contactList.add(contact);
@@ -142,7 +145,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_INSTANSI, contact.getinstansi_model());
         values.put(KEY_NOHP, contact.getnohp_model());
         values.put(KEY_TUJUAN, contact.gettujuan_model());
-        values.put(KEY_TIMEIN, getDateTime());
+        values.put(KEY_TIMEIN, contact.getTimein_model());
+        values.put(KEY_SIGNATURE, contact.getSignature_model());
         values.put(KEY_POTO, contact.get_img());
 
 

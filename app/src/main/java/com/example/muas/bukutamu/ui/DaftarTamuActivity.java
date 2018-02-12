@@ -85,9 +85,6 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
     }
 
-
-
-
     /*convert to pdf*/
     private void ExportData(){
         String directory_path = Environment.getExternalStorageDirectory().getPath() + "/Backup/";

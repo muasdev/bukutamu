@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -67,6 +69,7 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     private Bitmap bp;
     private byte[] img;
+    private byte[] signature;
     private DatabaseHandler db;
     private String nama, alamat, instansi, nohp, tujuan, timein;
 
@@ -118,7 +121,7 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
 
         nama = edtName.getText().toString();
@@ -127,13 +130,12 @@ public class BukuTamuActivity extends AppCompatActivity {
         nohp = edtNohp.getText().toString();
         tujuan = edtTujuan.getText().toString();
         timein = txtWaktu.getText().toString();
-        img = profileImage(bp);
 
-        outState.putString("editext1", nama);
+        outState.putString("editext1", nama);/*
         outState.putString("editext2", alamat);
         outState.putString("editext3", instansi);
         outState.putString("editext4", nohp);
-        outState.putString("editext5", tujuan);
+        outState.putString("editext5", tujuan);*/
         super.onSaveInstanceState(outState);
     }
 
@@ -143,7 +145,7 @@ public class BukuTamuActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
 
         edtName.setText(savedInstanceState.getString("edittext1"));
-    }*/
+    }
 
     private void cameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -245,12 +247,15 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     // function to get values from the Edittext and image
     private void getValues() {
+        /*get bitmap from imageviewfotottd*/
+        Bitmap bitmap = ((BitmapDrawable)imgViewFotoTtd.getDrawable()).getBitmap();
         nama = edtName.getText().toString();
         alamat = edtAlamat.getText().toString();
         instansi = edtInstansi.getText().toString();
         nohp = edtNohp.getText().toString();
         tujuan = edtTujuan.getText().toString();
         timein = txtWaktu.getText().toString();
+        signature = profileImage(bitmap);
         img = profileImage(bp);
 
     }
@@ -259,7 +264,7 @@ public class BukuTamuActivity extends AppCompatActivity {
     private void addContact() {
         getValues();
 
-        db.addContacts(new Contact(nama, alamat, instansi, nohp, tujuan, timein, img));
+        db.addContacts(new Contact(nama, alamat, instansi, nohp, tujuan, timein, signature, img));
         Toast.makeText(this, "Saved successfully", Toast.LENGTH_LONG).show();
     }
 

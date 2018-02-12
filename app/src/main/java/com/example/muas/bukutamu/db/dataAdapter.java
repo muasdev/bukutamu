@@ -30,7 +30,7 @@ public class dataAdapter extends ArrayAdapter<Contact> {
 
     public class Holder {
         TextView nameFV, alamatFV, instansiFV, nohpFV, tujuanFV, timeinFV;
-        ImageView pic;
+        ImageView pic, picttd;
     }
 
 
@@ -59,7 +59,7 @@ public class dataAdapter extends ArrayAdapter<Contact> {
             viewHolder.tujuanFV = (TextView) convertView.findViewById(R.id.txtTujuan);
             viewHolder.timeinFV = (TextView) convertView.findViewById(R.id.txtTimein);
             viewHolder.pic = (ImageView) convertView.findViewById(R.id.imgView);
-
+            viewHolder.picttd = (ImageView) convertView.findViewById(R.id.imgViewttd);
 
             convertView.setTag(viewHolder);
 
@@ -77,6 +77,7 @@ public class dataAdapter extends ArrayAdapter<Contact> {
         /*Picasso.with(context).load(contact.get_img(*/
         /*Picasso.with(context).load(String.valueOf(data.get_img())).into(viewHolder.pic);*/
         viewHolder.pic.setImageBitmap(convertToBitmap(data.get_img()));
+        viewHolder.picttd.setImageBitmap(convertToBitmap(data.getSignature_model()));
         /*Picasso.with(context)
                 .load(String.valueOf(data.get_img()))
                 .resize(30, 30)

@@ -16,13 +16,14 @@ public class Contact {
     String timein_model;
 
 
+    byte[] signature_model;
+
+
     byte[] _img;
 
-
-    // Empty constructor
     public Contact() {
-
     }
+
 
     public int get_id() {
         return _id;
@@ -88,7 +89,9 @@ public class Contact {
         this.timein_model = timein_model;
     }
 
-    public Contact(int _id, String nama_model, String alamat_model, String instansi_model, String nohp_model, String tujuan_model, String timein_model, byte[] _img) {
+
+
+    public Contact(int _id, String nama_model, String alamat_model, String instansi_model, String nohp_model, String tujuan_model, String timein_model, byte[] signature_model, byte[] _img) {
         this._id = _id;
         this.nama_model = nama_model;
         this.alamat_model = alamat_model;
@@ -96,17 +99,28 @@ public class Contact {
         this.nohp_model = nohp_model;
         this.tujuan_model = tujuan_model;
         this.timein_model = timein_model;
+        this.signature_model = signature_model;
         this._img = _img;
     }
 
-    public Contact(String nama_model, String alamat_model, String instansi_model, String nohp_model, String tujuan_model, String timein_model, byte[] _img) {
-
+    public Contact(String nama_model, String alamat_model, String instansi_model, String nohp_model, String tujuan_model, String timein_model, byte[] signature_model, byte[] _img) {
         this.nama_model = nama_model;
         this.alamat_model = alamat_model;
         this.instansi_model = instansi_model;
         this.nohp_model = nohp_model;
         this.tujuan_model = tujuan_model;
         this.timein_model = timein_model;
+        this.signature_model = signature_model;
         this._img = _img;
+    }
+
+
+
+    public byte[] getSignature_model() {
+        return signature_model;
+    }
+
+    public void setSignature_model(byte[] signature_model) {
+        this.signature_model = signature_model;
     }
 }
