@@ -16,7 +16,8 @@
         android:id="@+id/li_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp">
 
         <TextView
             android:id="@+id/txt_nomorurut"
@@ -39,25 +40,32 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/cpb_blue"
+        android:layout_height="2dp"
         android:layout_below="@id/li_header"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorBlack" />
 
     <LinearLayout
         android:id="@+id/li_center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/li_footer"
         android:layout_below="@id/li_header"
         android:orientation="horizontal">
 
 
-            <LinearLayout
-                android:layout_margin="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="40dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Name"
@@ -65,12 +73,19 @@
                     android:layout_height="wrap_content"
                     android:hint="nama tamu"
                     android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
 
-                <!--<EditText
-                    android:id="@+id/edt_Gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="jenis kelamin" />-->
+
+            <!--<EditText
+                android:id="@+id/edt_Gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="jenis kelamin" />-->
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Alamat"
@@ -78,6 +93,12 @@
                     android:layout_height="wrap_content"
                     android:hint="alamat"
                     android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Instansi"
@@ -85,6 +106,12 @@
                     android:layout_height="wrap_content"
                     android:hint="Instansi"
                     android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Nohp"
@@ -94,60 +121,68 @@
                     android:inputType="number"
                     android:textSize="30sp" />
 
-                <EditText
-                    android:id="@+id/edt_Tujuan"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Tujuan"
-                    android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
 
-            </LinearLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
-            <View
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:background="@color/cpb_blue"
-                />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgView_Foto_ttd"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/ic_launcher" />
-
-                <Button
-                    android:id="@+id/btn_take_ttd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="tanda tangan"
-                    android:textSize="20sp" />
-
-                <ImageView
-                    android:id="@+id/imgView_Foto_tamu"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/ic_launcher" />
-
-                <Button
-                    android:id="@+id/btn_take_photo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="take a photo"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
+            <EditText
+                android:id="@+id/edt_Tujuan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tujuan"
+                android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
+        <View
+            android:layout_width="2dp"
+            android:layout_height="500dp"
+            android:layout_gravity="center"
+            android:background="@color/colorBlack" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgView_Foto_ttd"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
+
+            <Button
+                android:id="@+id/btn_take_ttd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="tanda tangan"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/imgView_Foto_tamu"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
+
+            <Button
+                android:id="@+id/btn_take_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="take a photo"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout

@@ -28,7 +28,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_TAMU = "tamu";
 
     // Contacts Table Columns names
-    private static final String KEY_ID = "id";
+    private static final String KEY_ID = "no";
     private static final String KEY_NAMA = "Nama";
     private static final String KEY_ALAMAT = "Alamat";
     private static final String KEY_INSTANSI = "Instansi";
