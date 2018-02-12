@@ -58,20 +58,21 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="40dp"
+            android:layout_margin="70dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/text_in_layout_hint_Style"
                 android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="nama tamu"
+                    android:hint="Nama"
                     android:textSize="30sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -85,19 +86,21 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/text_in_layout_hint_Style"
                 android:layout_marginTop="20dp">
 
                 <EditText
                     android:id="@+id/edt_Alamat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="alamat"
+                    android:hint="Alamat"
                     android:textSize="30sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/text_in_layout_hint_Style"
                 android:layout_marginTop="20dp">
 
                 <EditText
@@ -111,6 +114,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/text_in_layout_hint_Style"
                 android:layout_marginTop="20dp">
 
                 <EditText
@@ -125,6 +129,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                app:hintTextAppearance="@style/text_in_layout_hint_Style"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
@@ -145,9 +150,9 @@
             android:background="@color/colorBlack" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_margin="40dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -160,9 +165,12 @@
 
             <Button
                 android:id="@+id/btn_take_ttd"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:drawableEnd="@drawable/calligraphy_signature"
+                android:drawablePadding="10dp"
                 android:text="tanda tangan"
                 android:textSize="20sp" />
 
@@ -175,8 +183,11 @@
 
             <Button
                 android:id="@+id/btn_take_photo"
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/photo_camera_24"
+                android:drawablePadding="10dp"
                 android:text="take a photo"
                 android:textSize="20sp" />
 
