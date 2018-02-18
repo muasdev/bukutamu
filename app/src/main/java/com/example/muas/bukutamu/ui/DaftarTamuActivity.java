@@ -102,7 +102,7 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
             @Override
             public void onCompleted(String filePath) {
-                Toast.makeText(DaftarTamuActivity.this, "sukses di export", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DaftarTamuActivity.this, "sukses tersimpan", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -130,7 +130,6 @@ public class DaftarTamuActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @OnClick({R.id.btn_display, R.id.btn_export})
     public void onViewClicked(View view) {
