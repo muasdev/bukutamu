@@ -38,8 +38,6 @@ public class SignatureActivity extends AppCompatActivity {
     Button clearButton;
 
     public static final int STORAGE_PERMISSION_CODE = 1001;
-    @BindView(R.id.viewButton)
-    Button viewButton;
     //Declare private variables
     public String signaturePath;
 
@@ -49,7 +47,6 @@ public class SignatureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signature);
         ButterKnife.bind(this);
 
-        viewButton = (Button) findViewById(R.id.viewButton);
         saveButton = (Button)findViewById(R.id.saveButton);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -92,6 +89,7 @@ public class SignatureActivity extends AppCompatActivity {
                 i.putExtras(bundle);
                 setResult(RESULT_OK, i);
                 startActivity(i);
+                finish();
             }
 
         });

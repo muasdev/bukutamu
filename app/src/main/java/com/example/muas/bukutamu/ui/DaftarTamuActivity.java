@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -48,7 +49,6 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
 
         ButterKnife.bind(this);
-
 
         /*export data to excel*/
         /*btnExport.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +102,7 @@ public class DaftarTamuActivity extends AppCompatActivity {
 
             @Override
             public void onCompleted(String filePath) {
-                Toast.makeText(DaftarTamuActivity.this, "ok fungsi ji je", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DaftarTamuActivity.this, "sukses di export", Toast.LENGTH_SHORT).show();
             }
 
             @Override

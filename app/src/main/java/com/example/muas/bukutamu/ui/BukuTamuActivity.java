@@ -1,7 +1,8 @@
 package com.example.muas.bukutamu.ui;
 
-import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,16 +11,22 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
+import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dd.CircularProgressButton;
 import com.example.muas.bukutamu.MainActivity;
 import com.example.muas.bukutamu.R;
 import com.example.muas.bukutamu.db.DatabaseHandler;
@@ -27,6 +34,11 @@ import com.example.muas.bukutamu.db.model.Contact;
 import com.example.muas.bukutamu.signature.SignatureActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -66,6 +78,16 @@ public class BukuTamuActivity extends AppCompatActivity {
     TextView txtWaktu;
     @BindView(R.id.txt_nomorurut)
     TextView txtNomorurut;
+    @BindView(R.id.daftar_nama_layout)
+    TextInputLayout daftarNamaLayout;
+    @BindView(R.id.daftar_alamat_layout)
+    TextInputLayout daftarAlamatLayout;
+    @BindView(R.id.daftar_instansi_layout)
+    TextInputLayout daftarInstansiLayout;
+    @BindView(R.id.daftar_nohp_layout)
+    TextInputLayout daftarNohpLayout;
+    @BindView(R.id.daftar_tujuan_layout)
+    TextInputLayout daftarTujuanLayout;
 
     private Bitmap bp;
     private byte[] img;
@@ -86,6 +108,31 @@ public class BukuTamuActivity extends AppCompatActivity {
     SimpleDateFormat simpleDateFormat;
     String Date;
 
+    SharedPreferences sharedPreferences;
+
+    static Uri capturedImageUri = null;
+
+    Vibrator vib;
+
+    Animation animShake;
+
+    String encodedImage;
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        sharedPreferences.edit().remove("ED_NAME").apply();
+        sharedPreferences.edit().remove("ED_ALAMAT").apply();
+        sharedPreferences.edit().remove("ED_INSTANSI").apply();
+        sharedPreferences.edit().remove("ED_NOHP").apply();
+        sharedPreferences.edit().remove("ED_TUJUAN").apply();
+        sharedPreferences.edit().remove("my_image").apply();
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,14 +146,55 @@ public class BukuTamuActivity extends AppCompatActivity {
 
         calendar = Calendar.getInstance();
         /*simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");*/
-        simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        simpleDateFormat = new SimpleDateFormat("EEE dd-MM-yyyy HH:mm:ss");
         Date = simpleDateFormat.format(calendar.getTime());
         txtWaktu.setText(Date);
 
         db.getProfilesCount();
         int profile_counts = db.getProfilesCount();
-        txtNomorurut.setText(String.valueOf("nomor urut : " + (profile_counts + 1)));
+        txtNomorurut.setText(String.valueOf("No. urut : " + (profile_counts + 1)));
 
+        animShake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            edtName.setText(sharedPreferences.getString("ED_NAME", ""));
+        }
+        if (sharedPreferences.contains("ED_NAME")) {
+            edtName.setText(sharedPreferences.getString("ED_NAME", ""));
+        }
+        if (sharedPreferences.contains("ED_ALAMAT")) {
+            edtAlamat.setText(sharedPreferences.getString("ED_ALAMAT", ""));
+        }
+        if (sharedPreferences.contains("ED_INSTANSI")) {
+            edtInstansi.setText(sharedPreferences.getString("ED_INSTANSI", ""));
+        }
+        if (sharedPreferences.contains("ED_NOHP")) {
+            edtNohp.setText(sharedPreferences.getString("ED_NOHP", ""));
+        }
+        if (sharedPreferences.contains("ED_TUJUAN")) {
+            edtTujuan.setText(sharedPreferences.getString("ED_TUJUAN", ""));
+        }
+        encodedImage = sharedPreferences.getString("my_image", "");
+        if (!encodedImage.equalsIgnoreCase("")) {
+            //Decoding the Image and display in ImageView
+            byte[] b = Base64.decode(encodedImage, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+            imgViewFotoTamu.setImageBitmap(bitmap);
+        }
+
+        /*get data from signature activity*/
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
@@ -121,121 +209,102 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Store values between instances here
+        sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Put the values from the UI
         nama = edtName.getText().toString();
         alamat = edtAlamat.getText().toString();
         instansi = edtInstansi.getText().toString();
         nohp = edtNohp.getText().toString();
         tujuan = edtTujuan.getText().toString();
-        timein = txtWaktu.getText().toString();
 
-        outState.putString("editext1", nama);/*
-        outState.putString("editext2", alamat);
-        outState.putString("editext3", instansi);
-        outState.putString("editext4", nohp);
-        outState.putString("editext5", tujuan);*/
-        super.onSaveInstanceState(outState);
-    }
+        editor.putString("ED_NAME", nama);
+        editor.putString("ED_ALAMAT", alamat);
+        editor.putString("ED_INSTANSI", instansi);
+        editor.putString("ED_NOHP", nohp);
+        editor.putString("ED_TUJUAN", tujuan);
+        editor.putString("my_image", encodedImage);
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        editor.commit();
 
-        super.onRestoreInstanceState(savedInstanceState);
-
-        edtName.setText(savedInstanceState.getString("edittext1"));
     }
 
     private void cameraIntent() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }*/
+        Calendar cal = Calendar.getInstance();
+        File file = new File(Environment.getExternalStorageDirectory(), "/Backup/" + (cal.getTimeInMillis() + ".jpg"));
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            file.delete();
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        capturedImageUri = Uri.fromFile(file);
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);
+        startActivityForResult(i, REQUEST_IMAGE_CAPTURE);
     }
+
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            /*case REQUEST_IMAGE_TTD:
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*if(requestCode==REQUEST_IMAGE_CAPTURE&&resultCode==RESULT_OK){
+        Bundle extras=data.getExtras();
+        Bitmap imageBitmap=(Bitmap)extras.get("data");
+        imgViewFotoTamu.setImageBitmap(imageBitmap);
 
-                if (resultCode == RESULT_OK) {
+        }*/
 
-                    Bundle extras = data.getExtras();
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+            //Bitmap photo = (Bitmap) data.getExtras().get("data");
+            //imageView.setImageBitmap(photo);
 
-                    if (extras != null) {
-                        signaturePath = extras.getString("SignaturePath");
-                        if (signaturePath != null) {
-                            imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
-                            btnTakePhoto.setEnabled(true);
-                        } else {
-                            imgViewFotoTtd.setImageResource(R.drawable.ic_apps_black_24dp);
-                        }
+            try {
 
-                    }*/
-
-                    /*Intent intent = getIntent();
-                    Bundle extras = intent.getExtras();
-
-                    if (extras != null) {
-                        signaturePath = data.getStringExtra("SignaturePath");
-                        if (signaturePath != null)
-                            imgViewFotoTtd.setImageURI(Uri.parse("file://" + signaturePath));
-                        btnTakePhoto.setEnabled(true);
-                    }*/
-
-            case REQUEST_IMAGE_CAPTURE:
-                if (resultCode == RESULT_OK) {
-                    Uri choosenImage = data.getData();
-
-                    if (choosenImage != null) {
-
-                        bp = decodeUri(choosenImage, 400);
-                        imgViewFotoTamu.setImageBitmap(bp);
-                    }
-                }
-                break;
-
-        }
-    }
-
-
-    //COnvert and resize our image to 400dp for faster uploading our images to DB
-    protected Bitmap decodeUri(Uri selectedImage, int REQUIRED_SIZE) {
-
-        try {
-
-            // Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImage), null, o);
-
-            // The new size we want to scale to
-            // final int REQUIRED_SIZE =  size;
-
-            // Find the correct scale value. It should be the power of 2.
-            int width_tmp = o.outWidth, height_tmp = o.outHeight;
-            int scale = 1;
-            while (true) {
-                if (width_tmp / 2 < REQUIRED_SIZE
-                        || height_tmp / 2 < REQUIRED_SIZE) {
-                    break;
-                }
-                width_tmp /= 2;
-                height_tmp /= 2;
-                scale *= 2;
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), capturedImageUri);
+                // Encoding Image into Base64
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] b = baos.toByteArray();
+                //Converting Base64 into String to Store in SharedPreferences
+                encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("my_image", encodedImage);
+                editor.commit();
+                imgViewFotoTamu.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-
-            // Decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(this.getContentResolver().openInputStream(selectedImage), null, o2);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return null;
     }
 
     //Convert bitmap to bytes
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
+    /*@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)*/
     private byte[] profileImage(Bitmap b) {
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -248,7 +317,8 @@ public class BukuTamuActivity extends AppCompatActivity {
     // function to get values from the Edittext and image
     private void getValues() {
         /*get bitmap from imageviewfotottd*/
-        Bitmap bitmap = ((BitmapDrawable)imgViewFotoTtd.getDrawable()).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable) imgViewFotoTtd.getDrawable()).getBitmap();
+        Bitmap bitmap1 = ((BitmapDrawable) imgViewFotoTamu.getDrawable()).getBitmap();
         nama = edtName.getText().toString();
         alamat = edtAlamat.getText().toString();
         instansi = edtInstansi.getText().toString();
@@ -256,7 +326,7 @@ public class BukuTamuActivity extends AppCompatActivity {
         tujuan = edtTujuan.getText().toString();
         timein = txtWaktu.getText().toString();
         signature = profileImage(bitmap);
-        img = profileImage(bp);
+        img = profileImage(bitmap1);
 
     }
 
@@ -265,7 +335,58 @@ public class BukuTamuActivity extends AppCompatActivity {
         getValues();
 
         db.addContacts(new Contact(nama, alamat, instansi, nohp, tujuan, timein, signature, img));
-        Toast.makeText(this, "Saved successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Data Tersimpan, Terimakasih telah berkunjung di kantor kami", Toast.LENGTH_LONG).show();
+    }
+
+    /*kode for validate edittext*/
+    private boolean checkNama() {
+        if (edtName.getText().toString().trim().isEmpty()) {
+            daftarNamaLayout.setErrorEnabled(true);
+            daftarNamaLayout.setError("Masukkan Nama");
+            return false;
+        }
+        daftarNamaLayout.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean checkAlamat() {
+        if (edtAlamat.getText().toString().trim().isEmpty()) {
+            daftarAlamatLayout.setErrorEnabled(true);
+            daftarAlamatLayout.setError("Masukkan Alamat");
+            return false;
+        }
+        daftarAlamatLayout.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean checkInstansi() {
+        if (edtInstansi.getText().toString().trim().isEmpty()) {
+            daftarInstansiLayout.setErrorEnabled(true);
+            daftarInstansiLayout.setError("Masukkan Instansi");
+            return false;
+        }
+        daftarInstansiLayout.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean checkNohp() {
+        if (edtNohp.getText().toString().trim().isEmpty()) {
+            daftarNohpLayout.setErrorEnabled(true);
+            daftarNohpLayout.setError("Masukkan No. HP");
+            return false;
+        }
+        daftarNohpLayout.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean checkTujuan() {
+        if (edtTujuan.getText().toString().trim().isEmpty()) {
+            daftarTujuanLayout.setErrorEnabled(true);
+            daftarTujuanLayout.setError("Masukkan Tujuan");
+            return false;
+        }
+        daftarTujuanLayout.setErrorEnabled(false);
+        return true;
     }
 
 
@@ -280,21 +401,43 @@ public class BukuTamuActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_IMAGE_TTD);
                 break;
             case R.id.btn_save:
-                /*if (edtName.getText().toString().trim().equals("")) {
-                    Toast.makeText(this, "Name edit text is empty, Enter name", Toast.LENGTH_LONG).show();
-                } else if (edtAlamat.getText().toString().trim().equals("")) {
-                    Toast.makeText(this, "Name edit text is empty, masukkan alamat", Toast.LENGTH_LONG).show();
-                } else if (edtInstansi.getText().toString().trim().equals("")) {
-                    Toast.makeText(this, "Name edit text is empty, masukkan instansi", Toast.LENGTH_LONG).show();
-                } else if (edtNohp.getText().toString().trim().equals("")) {
-                    Toast.makeText(this, "Name edit text is empty, masukkan no hp", Toast.LENGTH_LONG).show();
-                } else if (edtTujuan.getText().toString().trim().equals("")) {
-                    Toast.makeText(this, "Name edit text is empty, masukkan tujuan", Toast.LENGTH_LONG).show();
-                } else
-                */
-                    addContact();
-                    Intent intent1 = new Intent(this, MainActivity.class);
-                    startActivity(intent1);
+                if (!checkNama()) {
+                    /*daftarNamaLayout.setAnimation(animShake);
+                    daftarNamaLayout.startAnimation(animShake);*/
+                    vib.vibrate(120);
+                    return;
+                }
+                if (!checkAlamat()) {
+                    vib.vibrate(120);
+                    return;
+                }
+                if (!checkInstansi()) {
+                    vib.vibrate(120);
+                    return;
+                }
+                if (!checkNohp()) {
+                    vib.vibrate(120);
+                    return;
+                }
+                if (!checkTujuan()) {
+                    vib.vibrate(120);
+                    return;
+                }
+
+                daftarNamaLayout.setErrorEnabled(false);
+                daftarAlamatLayout.setErrorEnabled(false);
+                daftarInstansiLayout.setErrorEnabled(false);
+                daftarNohpLayout.setErrorEnabled(false);
+                daftarTujuanLayout.setErrorEnabled(false);
+
+                addContact();
+
+                sharedPreferences = getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+                sharedPreferences.edit().clear().commit();
+                finish();
+
+                Intent intent1 = new Intent(this, MainActivity.class);
+                startActivity(intent1);
 
                 break;
         }
@@ -302,10 +445,13 @@ public class BukuTamuActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_reset)
     public void onViewClicked() {
-
-        imgViewFotoTtd.setImageResource(R.mipmap.ic_launcher);
-        imgViewFotoTamu.setImageResource(R.mipmap.ic_launcher);
-        btnTakePhoto.setEnabled(false);
+        edtName.setText("");
+        edtAlamat.setText("");
+        edtInstansi.setText("");
+        edtNohp.setText("");
+        edtTujuan.setText("");
+        imgViewFotoTtd.setImageResource(R.drawable.signature_pic);
+        imgViewFotoTamu.setImageResource(R.drawable.user_pic);
     }
     /*@OnClick(R.id.btnWithText)
     public void onViewClicked() {
@@ -314,5 +460,10 @@ public class BukuTamuActivity extends AppCompatActivity {
         btnWithText.setProgress(100); // set progress to 100 or -1 to indicate complete or error state
         btnWithText.setProgress(0); // set progress to 0 to switch back to normal state
         addContact();
+    }*/
+
+    /*@Override
+    protected void onDestroy() {
+        super.onDestroy();
     }*/
 }

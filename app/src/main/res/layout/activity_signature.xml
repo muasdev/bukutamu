@@ -33,12 +33,6 @@
             android:onClick="OnClearSignatureClick"
             android:text="Clear" />
 
-        <Button
-            android:id="@+id/viewButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="View" />
     </LinearLayout>
 
 </LinearLayout>

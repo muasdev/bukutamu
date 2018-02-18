@@ -7,4 +7,13 @@
 
     <color name="white">#ffffff</color>
     <color name="activity_background">#232530</color>
+
+    <color name="primaryColor">#00923f</color>
+    <color name="primaryLightColor">#4fc46c</color>
+    <color name="primaryDarkColor">#006313</color>
+    <color name="secondaryColor">#009933</color>
+    <color name="secondaryLightColor">#51cb61</color>
+    <color name="secondaryDarkColor">#006900</color>
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#ffffff</color>
 </resources>

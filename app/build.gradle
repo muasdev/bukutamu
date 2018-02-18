@@ -4,8 +4,9 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.muas.bukutamu"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 26
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -34,6 +35,9 @@ dependencies {
     implementation 'com.github.gcacace:signature-pad:1.2.1'
 
     implementation 'com.ajts.androidmads.SQLite2Excel:library:1.0.2'
+    implementation 'com.github.florent37:materialtextfield:1.0.7'
+
+    implementation 'com.android.support:multidex:1.0.1'
 
     implementation 'me.spark:submitbutton:1.0.1'
     implementation 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'

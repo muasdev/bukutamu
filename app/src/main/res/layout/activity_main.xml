@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_dua"
     android:orientation="vertical"
     tools:context="com.example.muas.bukutamu.MainActivity">
 
@@ -19,7 +20,7 @@
             android:layout_weight="1"
             >-->
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/image_profil_main_activity"
         android:layout_width="300dp"
         android:layout_height="300dp"
@@ -38,7 +39,7 @@
         android:text="Buku Tamu"
         android:textSize="30sp"
         android:textStyle="bold" />
-
+-->
     <!--     </RelativeLayout>-->
 
     <!--<View
@@ -50,7 +51,6 @@
         android:layout_width="400dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="1.5"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -58,13 +58,23 @@
             android:id="@+id/button_bukutamu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="buku tamu" />
+            android:layout_marginTop="500dp"
+            android:background="#009933"
+            android:text="Buku Tamu"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textColor="#ffffff" />
 
         <Button
             android:id="@+id/button_listtamu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="list tamu" />
+            android:layout_marginTop="20dp"
+            android:text="Daftar Tamu"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="#009933"
+            android:textColor="#ffffff" />
 
         <!--<com.spark.submitbutton.SubmitButton
             android:id="@+id/button_animasi"

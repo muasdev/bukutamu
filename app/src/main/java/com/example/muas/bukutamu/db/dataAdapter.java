@@ -20,6 +20,7 @@ public class dataAdapter extends ArrayAdapter<Contact> {
 
     Context context;
     ArrayList<Contact> mcontact;
+    String[] items_list;
 
 
     public dataAdapter(Context context, ArrayList<Contact> contact) {
@@ -65,6 +66,7 @@ public class dataAdapter extends ArrayAdapter<Contact> {
 
 
         } else {
+            /*add linebreak to header list*/
             viewHolder = (Holder) convertView.getTag();
         }
 

@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="nama tamu"
+            android:text="Nama Tamu"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/txtViewer"
             />
 
@@ -43,7 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="alamat"
+            android:text="Alamat"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/txtAlamat"
             />
 
@@ -51,6 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:text="Instansi"
             android:id="@+id/txtInstansi"
             />
@@ -59,7 +62,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="No. hp"
+            android:text="No. HP"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/txtNohp"
             />
 
@@ -68,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Tujuan"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/txtTujuan"
             />
         <TextView
@@ -75,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="Timein"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
             android:id="@+id/txtTimein"
             />
 
